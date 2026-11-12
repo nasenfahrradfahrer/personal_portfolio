@@ -1,0 +1,62 @@
+.language-bars__list {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.language__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.625rem;
+}
+
+.language__name {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+
+.language__years {
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Leiste baut sich langsam und gleichmäßig auf, kurz nachdem ihre Zeile eingeblendet wird;
+   --delay kommt vom Reveal der Zeile */
+.language .experience-bar__fill {
+  transition-duration: 2s;
+  transition-timing-function: cubic-bezier(0.45, 0, 0.2, 1);
+  transition-delay: calc(var(--delay, 0ms) + 300ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .language .experience-bar__fill {
+    transition-delay: 0ms;
+  }
+}
+
+.language__detail {
+  margin-top: 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+.language-bars__scale {
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+@media (min-width: 768px) {
+  .language-bars__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.75rem 3rem;
+  }
+
+  .language-bars__scale {
+    max-width: calc(50% - 1.5rem);
+  }
+}

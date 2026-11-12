@@ -1,0 +1,473 @@
+/* Seite dahinter nicht scrollen, solange das Overlay offen ist */
+html:has(.project-modal[open]) {
+  overflow: hidden;
+}
+
+.project-modal {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+}
+
+/* Mobil: Blatt von unten */
+.project-modal[open] {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.project-modal::backdrop {
+  background: rgba(4, 5, 10, 0.85);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.project-modal[open]::backdrop {
+  animation: project-modal-fade 0.3s ease-out;
+}
+
+.project-modal__panel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: calc(100vh - 1rem);
+  max-height: calc(100dvh - 1rem);
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  border-bottom: 0;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background:
+    radial-gradient(120% 50% at 0% 0%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%),
+    radial-gradient(80% 40% at 100% 100%, color-mix(in srgb, var(--c-violet) 10%, transparent), transparent 70%),
+    var(--bg-elev);
+  box-shadow: 0 -20px 60px -30px rgba(0, 0, 0, 0.9);
+  animation: project-modal-up 0.4s var(--ease);
+}
+
+/* ---------- Kopf ---------- */
+
+.project-modal__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.25rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.project-modal__meta {
+  color: color-mix(in srgb, var(--accent) 80%, white);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+/* Doppelte Klasse, weil das Overlay im DOM innerhalb von .section liegt und sonst
+   „.section h2“ greifen würde */
+.project-modal .project-modal__title {
+  margin-top: 0.375rem;
+  font-size: clamp(1.375rem, 2vw + 1rem, 2rem);
+}
+
+.project-modal__close {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s;
+}
+
+.project-modal__close:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: var(--surface-hover);
+}
+
+/* ---------- Inhalt (scrollt) ---------- */
+
+.project-modal__body {
+  display: grid;
+  flex: 1;
+  gap: 2rem;
+  min-height: 0;
+  padding: 1.25rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* Nur mobil: Hinweis, dass die Ansicht am Desktop besser wirkt (ab Tablet ausgeblendet) */
+.project-modal__hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  margin-bottom: -0.75rem;
+  padding: 0.75rem 0.875rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.project-modal__hint svg {
+  flex-shrink: 0;
+  margin-top: 0.0625rem;
+  color: color-mix(in srgb, var(--accent) 85%, white);
+}
+
+.project-modal__summary {
+  max-width: 68ch;
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.project-modal__heading {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin-bottom: 1rem;
+  font-size: 1.0625rem;
+}
+
+.project-modal__heading::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+}
+
+/* Kennzahlen */
+.project-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+}
+
+/* Wert steht im DOM nach der Beschriftung (Screenreader: „Beschriftung: Wert“), optisch darüber */
+.project-fact {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: 0.25rem;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.project-fact dd {
+  margin: 0;
+  color: color-mix(in srgb, var(--accent) 80%, white);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.project-fact dt {
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  line-height: 1.35;
+}
+
+/* Ablauf: mobil untereinander mit senkrechter Linie, Desktop nebeneinander */
+.project-flow__step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  align-content: start;
+  column-gap: 0.875rem;
+  padding-bottom: 1.25rem;
+}
+
+.project-flow__step:last-child {
+  padding-bottom: 0;
+}
+
+.project-flow__step:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  top: 2.75rem;
+  bottom: 0.25rem;
+  left: calc(1.25rem - 1px);
+  width: 2px;
+  border-radius: 1px;
+  background: color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+.project-flow__icon {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 14%, var(--bg-elev));
+  color: color-mix(in srgb, var(--accent) 85%, white);
+}
+
+.project-flow__title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+}
+
+.project-flow__title span {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.project-flow__text {
+  margin-top: 0.25rem;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+}
+
+/* Kacheln */
+.project-modal__grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.project-modal__card {
+  padding: 1.125rem 1.25rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.project-modal__card h3 {
+  margin-bottom: 0.75rem;
+  font-size: 1.0625rem;
+}
+
+.project-modal__points {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.project-modal__points li {
+  position: relative;
+  padding-left: 1.125rem;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+
+.project-modal__points li::before {
+  content: '';
+  position: absolute;
+  top: 0.6em;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* Technologien */
+.project-stack {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+}
+
+.project-stack__group dt {
+  margin-bottom: 0.5rem;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.project-stack__group dd {
+  margin: 0;
+}
+
+.project-stack__group ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.project-stack__group li {
+  padding: 0.25rem 0.625rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+/* ---------- Fußleiste ---------- */
+
+/* Mobil volle Breite; auf sehr schmalen Handys rutschen die Buttons untereinander */
+.project-modal__foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  padding: 0.875rem 1.25rem;
+  padding-bottom: calc(0.875rem + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg-elev) 90%, transparent);
+}
+
+.project-modal__foot .btn {
+  flex: 1 1 auto;
+}
+
+.project-modal__foot .btn--primary {
+  --btn-glow: var(--accent);
+}
+
+@keyframes project-modal-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes project-modal-up {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+}
+
+@keyframes project-modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+}
+
+/* ---------- Breakpoints ---------- */
+
+@media (min-width: 480px) {
+  .project-stack__group {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    align-items: baseline;
+    gap: 1rem;
+  }
+
+  .project-stack__group dt {
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 640px) {
+  .project-facts {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .project-modal__foot {
+    justify-content: flex-end;
+  }
+
+  .project-modal__foot .btn {
+    flex: 0 0 auto;
+  }
+}
+
+/* Ab Tablet: mittig als Karte */
+@media (min-width: 768px) {
+  .project-modal {
+    padding: 2rem;
+  }
+
+  .project-modal[open] {
+    align-items: center;
+  }
+
+  .project-modal__hint {
+    display: none;
+  }
+
+  .project-modal__panel {
+    max-width: 58rem;
+    max-height: calc(100vh - 4rem);
+    max-height: calc(100dvh - 4rem);
+    border-bottom: 1px solid var(--border-strong);
+    border-radius: var(--radius-xl);
+    box-shadow:
+      0 30px 80px -24px rgba(0, 0, 0, 0.9),
+      0 0 80px -40px color-mix(in srgb, var(--accent) 60%, transparent);
+    animation-name: project-modal-in;
+    animation-duration: 0.35s;
+  }
+
+  .project-modal__head {
+    padding: 1.75rem 2rem 1.25rem;
+  }
+
+  .project-modal__body {
+    gap: 2.25rem;
+    padding: 1.75rem 2rem 2rem;
+  }
+
+  .project-modal__summary {
+    font-size: 1.0625rem;
+  }
+
+  .project-modal__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .project-modal__foot {
+    padding: 1rem 2rem;
+  }
+}
+
+@media (min-width: 960px) {
+  .project-flow {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .project-flow__step {
+    grid-template-columns: minmax(0, 1fr);
+    padding-bottom: 0;
+  }
+
+  /* Linie vom Symbol zum nächsten Symbol */
+  .project-flow__step:not(:last-child)::before {
+    top: calc(1.25rem - 1px);
+    right: -0.5rem;
+    bottom: auto;
+    left: 3.25rem;
+    width: auto;
+    height: 2px;
+  }
+
+  .project-flow__title {
+    margin-top: 0.875rem;
+  }
+}

@@ -1,0 +1,17 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Geheimnisse
+.env
+
+# Unter knowledge/ ist nur templates/ öffentlich. Alles andere ist privat oder erzeugt:
+# private/ (Klon des privaten Repos, python -m app.cli fetch-knowledge) und index/ (build-index)
+knowledge/*
+!knowledge/templates/
+
+# Erzeugt zur Laufzeit
+data/
+.cache/

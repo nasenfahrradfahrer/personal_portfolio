@@ -1,0 +1,68 @@
+:root {
+  color-scheme: dark;
+
+  /* Flächen */
+  --bg: #07080f;
+  --bg-elev: #0e1020;
+  --surface: rgba(255, 255, 255, 0.04);
+  --surface-hover: rgba(255, 255, 255, 0.07);
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.16);
+
+  /* Text */
+  --text: #eceef6;
+  --text-muted: #a3a9c2;
+  --text-dim: #737a99;
+  --text-on-accent: #0a0b14;
+
+  /* Akzentfarben */
+  --c-violet: #a78bfa;
+  --c-cyan: #22d3ee;
+  --c-pink: #f472b6;
+  --c-amber: #fbbf24;
+  --c-emerald: #34d399;
+
+  /* Diagrammfarben: auf --bg-elev auf Farbsehschwäche und Kontrast geprüft,
+     Beschriftung darauf mit --text-on-accent (mind. 4.6:1) */
+  --viz-1: #8b5cf6;
+  --viz-2: #0891b2;
+  --viz-3: #ec4899;
+  --viz-other: #9ca3af;
+
+  --gradient: linear-gradient(120deg, var(--c-violet), var(--c-cyan) 50%, var(--c-pink));
+  --gradient-wide: linear-gradient(
+    90deg,
+    var(--c-violet),
+    var(--c-cyan),
+    var(--c-pink),
+    var(--c-amber)
+  );
+
+  /* Typografie */
+  --font-sans: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Space Grotesk Variable', var(--font-sans);
+
+  /* Layout */
+  --container: 1120px;
+  --gutter: 1rem;
+  --header-h: 4rem;
+  --radius-sm: 10px;
+  --radius: 16px;
+  --radius-lg: 22px;
+  --radius-xl: 28px;
+
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (min-width: 640px) {
+  :root {
+    --gutter: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --gutter: 2rem;
+    --header-h: 4.5rem;
+  }
+}

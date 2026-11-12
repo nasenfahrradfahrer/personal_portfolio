@@ -1,0 +1,69 @@
+# Abhängigkeiten
+node_modules/
+
+# Build-Ausgabe
+dist/
+dist-ssr/
+build/
+
+# Vite
+.vite/
+*.local
+vite.config.*.timestamp-*
+
+# Umgebungsvariablen (Vorlage .env.example darf ins Repo)
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Caches
+.cache/
+.npm/
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
+
+# Tests
+coverage/
+
+# Editoren / IDEs
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Betriebssysteme
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Deployment
+.vercel/
+.netlify/
+
+# Lokale Claude-Code-Einstellungen
+.claude/settings.local.json
+
+# non git stuff
+claude_resources
+# alle cv*-Ordner im Projekt-Root (cv_pdf, cv_ats, "cv_pdf backup", ...)
+/cv*/
+# Ausnahme: LaTeX-Quellen des ATS-Lebenslaufs (PDFs in frontend/public), ohne Build-Dateien
+!/cv_ats/
+/cv_ats/*
+!/cv_ats/*.tex
+
+# Lokale Sicherungen (nicht veröffentlichen)
+*_backup.md

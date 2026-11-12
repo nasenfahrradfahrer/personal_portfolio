@@ -1,0 +1,104 @@
+.section {
+  padding-block: 3rem;
+  scroll-margin-top: var(--header-h);
+}
+
+.section__head {
+  position: relative;
+  isolation: isolate;
+  max-width: 44rem;
+  margin-bottom: 2.5rem;
+}
+
+/* Großes Symbol in der Abschnittsfarbe, nur angedeutet hinter der Überschrift.
+   Dreht sich beim Einblenden leicht in Position. */
+.section__icon {
+  position: absolute;
+  z-index: -1;
+  top: -1.25rem;
+  right: -0.25rem;
+  width: 7.5rem;
+  aspect-ratio: 1;
+  color: color-mix(in srgb, var(--accent) 38%, transparent);
+  pointer-events: none;
+  transform: rotate(-8deg);
+  transition: transform 1.2s var(--ease) 0.15s;
+  -webkit-mask-image: linear-gradient(160deg, #000 30%, transparent 95%);
+  mask-image: linear-gradient(160deg, #000 30%, transparent 95%);
+}
+
+.section__head:not(.is-visible) .section__icon {
+  transform: rotate(-22deg) scale(0.85);
+}
+
+/* Weicher Schein; bleibt innerhalb der Box, sonst schneidet die Maske ihn eckig ab */
+.section__icon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 18%, transparent), transparent 70%);
+}
+
+.section__icon svg {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  stroke-width: 1.25;
+}
+
+.section__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.section__eyebrow::after {
+  content: '';
+  width: 2.5rem;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+
+.section__eyebrow span {
+  color: var(--text-dim);
+}
+
+.section h2 {
+  margin-top: 0.875rem;
+  font-size: clamp(2rem, 3.5vw + 1.1rem, 3.25rem);
+}
+
+.section__lead {
+  margin-top: 1rem;
+  color: var(--text-muted);
+  font-size: 1.0625rem;
+}
+
+@media (min-width: 640px) {
+  .section__icon {
+    width: 9rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding-block: 4.5rem;
+  }
+
+  .section__head {
+    margin-bottom: 3.5rem;
+  }
+
+  /* Rechts neben der Überschrift, ragt nur leicht unter den Text */
+  .section__icon {
+    top: -2rem;
+    right: -9rem;
+    width: 11rem;
+  }
+}

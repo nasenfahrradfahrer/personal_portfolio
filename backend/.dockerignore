@@ -1,0 +1,15 @@
+# Nur Code, Testfragen und Vorlagen gehören ins Image. Alles andere ist privat, lokal oder erzeugt.
+# Ins Image kopiert das Dockerfile ohnehin nur ausgewählte Pfade; diese Liste hält zusätzlich den
+# Build-Kontext klein und schützt, falls dort einmal COPY . . steht.
+.env
+.env.*
+!.env.example
+.venv/
+.cache/
+.pytest_cache/
+**/__pycache__/
+*.pyc
+data/
+knowledge/*
+!knowledge/templates/
+tests/

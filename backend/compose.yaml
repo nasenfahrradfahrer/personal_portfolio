@@ -1,0 +1,59 @@
+# Backend auf dem VPS. Liegt dort als /srv/cv-backend/compose.yaml (root-eigen) neben:
+#
+#   .env                           Geheimnisse und Einstellungen (root, 600), Vorlage .env.example
+#   state/                         Tagesbudget und Gesprächsprotokoll (UID 10001)
+#   secrets/knowledge_deploy_key   Deploy Key (nur Lesen) fürs private Repo (UID 10001, 400)
+#
+# Aktualisieren: sudo cv-deploy (deploy/cv-deploy.sh). Einrichtung: backend/README.md, „Betrieb“.
+
+name: cv-backend
+
+services:
+  backend:
+    image: ${BACKEND_IMAGE:-ghcr.io/nasenfahrradfahrer/personal_portfolio-backend:latest}
+    restart: unless-stopped
+    init: true
+    env_file: .env
+    environment:
+      # Feste Pfade im Container; haben Vorrang vor gleichnamigen Einträgen in .env
+      KNOWLEDGE_REPO: git@github.com:nasenfahrradfahrer/portfolio_website_private_files.git
+      KNOWLEDGE_DIR: /data/knowledge
+      INDEX_DIR: /data/index
+      DATA_DIR: /data/state
+      EMBEDDING_CACHE_DIR: /opt/fastembed  # Modell steckt im Image
+      GIT_SSH_COMMAND: ssh -i /run/secrets/knowledge_deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes
+    secrets:
+      - knowledge_deploy_key
+    volumes:
+      - knowledge:/data/knowledge   # Spiegel des privaten Repos (letzter Stand, falls GitHub fehlt)
+      - index:/data/index           # Suchindex, beim Start neu gebaut
+      - ./state:/data/state         # Budget und Gespräche: auf dem Host, für Backups und jq
+    # Nur lokal erreichbar: Caddy auf dem Host leitet api.felixmoeller.me hierher weiter.
+    # Ohne 127.0.0.1 wäre der Port trotz Firewall offen (Docker umgeht ufw).
+    ports:
+      - "127.0.0.1:8000:8000"
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import sys, urllib.request; sys.exit(b'\"status\":\"ok\"' not in urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=5).read())"
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10m  # Wissensbasis holen und Index bauen
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+
+volumes:
+  knowledge:
+  index:
+
+secrets:
+  knowledge_deploy_key:
+    file: ./secrets/knowledge_deploy_key

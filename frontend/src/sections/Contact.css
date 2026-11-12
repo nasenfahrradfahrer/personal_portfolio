@@ -1,0 +1,98 @@
+.contact-card {
+  display: grid;
+  gap: 2rem;
+  padding: 1.5rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-xl);
+  background:
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--c-amber) 16%, transparent), transparent 50%)
+      padding-box,
+    radial-gradient(circle at 0% 100%, color-mix(in srgb, var(--c-pink) 12%, transparent), transparent 50%)
+      padding-box,
+    linear-gradient(var(--bg-elev), var(--bg-elev)) padding-box,
+    linear-gradient(135deg, var(--c-amber), var(--c-pink) 45%, var(--c-violet)) border-box;
+}
+
+.contact__text h3 {
+  font-size: clamp(1.5rem, 2vw + 1rem, 2.25rem);
+}
+
+.contact__text p {
+  max-width: 34rem;
+  margin-top: 0.875rem;
+  color: var(--text-muted);
+}
+
+.contact__actions {
+  --btn-gradient: linear-gradient(120deg, var(--c-amber), var(--c-pink));
+  --btn-glow: var(--c-amber);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.contact__list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.contact__item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  transition:
+    border-color 0.2s,
+    background-color 0.2s;
+}
+
+.contact__item--link:hover {
+  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+  background: var(--surface-hover);
+}
+
+.contact__icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  color: var(--accent);
+}
+
+.contact__label {
+  display: block;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.contact__value {
+  display: block;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 480px) {
+  .contact__actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+@media (min-width: 900px) {
+  .contact-card {
+    grid-template-columns: 1.3fr 1fr;
+    align-items: center;
+    gap: 3rem;
+    padding: 3rem;
+  }
+}

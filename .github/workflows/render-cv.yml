@@ -1,0 +1,80 @@
+# Rendert den ATS-Lebenslauf (cv_ats/*.tex) neu und legt die PDFs in frontend/public ab, sobald
+# sich die LaTeX-Quellen auf master ändern. Der Commit mit den neuen PDFs löst dann den
+# Vercel-Build aus.
+#
+# - SOURCE_DATE_EPOCH = Zeitpunkt der letzten Änderung in cv_ats/: Gleiche Quellen ergeben
+#   bitgleiche PDFs, committet wird also nur bei echten Änderungen.
+# - Autor des PDF-Commits ist der Autor des auslösenden Commits: Vercel (Hobby) baut in privaten
+#   Repos nur Commits, deren Autor Zugriff auf das Vercel-Projekt hat.
+# - Commits mit GITHUB_TOKEN lösen keine weiteren Workflows aus, es entsteht keine Schleife.
+
+name: CV-PDFs rendern
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'cv_ats/*.tex'
+      - '.github/workflows/render-cv.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: render-cv
+  cancel-in-progress: false
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: PDFs mit pdflatex rendern
+        run: |
+          export SOURCE_DATE_EPOCH="$(git log -1 --format=%ct -- cv_ats)"
+          docker run --rm \
+            -v "$PWD/cv_ats:/work" -w /work \
+            -e SOURCE_DATE_EPOCH -e FORCE_SOURCE_DATE=1 \
+            texlive/texlive:latest \
+            latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error \
+              cv_ats.tex cv_ats_de.tex
+
+      - name: Seitenzahl prüfen (je 1 Seite)
+        run: |
+          sudo apt-get install -y -qq poppler-utils >/dev/null
+          for f in cv_ats/cv_ats.pdf cv_ats/cv_ats_de.pdf; do
+            pages="$(pdfinfo "$f" | awk '/^Pages:/ {print $2}')"
+            echo "$f: $pages Seite(n)"
+            if [ "$pages" != "1" ]; then
+              echo "::warning file=$f::Lebenslauf hat $pages Seiten statt 1"
+            fi
+          done
+
+      - name: PDFs nach frontend/public kopieren und committen
+        env:
+          AUTHOR_NAME: ${{ github.event.head_commit.author.name || github.actor }}
+          AUTHOR_EMAIL: ${{ github.event.head_commit.author.email || format('{0}@users.noreply.github.com', github.actor) }}
+        run: |
+          cp cv_ats/cv_ats.pdf frontend/public/felix-moeller-cv-en.pdf
+          cp cv_ats/cv_ats_de.pdf frontend/public/felix-moeller-cv-de.pdf
+
+          if git diff --quiet -- frontend/public/felix-moeller-cv-en.pdf frontend/public/felix-moeller-cv-de.pdf; then
+            echo "PDFs unverändert, nichts zu committen."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add frontend/public/felix-moeller-cv-en.pdf frontend/public/felix-moeller-cv-de.pdf
+          git commit --author="$AUTHOR_NAME <$AUTHOR_EMAIL>" \
+            -m "Render CV PDFs from cv_ats sources" \
+            -m "Automatisch erzeugt aus ${GITHUB_SHA::7} (Workflow: CV-PDFs rendern)."
+
+          # Falls master inzwischen weitergezogen ist
+          git pull --rebase origin master
+          git push origin HEAD:master

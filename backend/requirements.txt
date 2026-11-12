@@ -1,0 +1,11 @@
+anthropic>=1.11,<2
+fastapi>=0.142
+uvicorn[standard]>=0.54
+python-dotenv>=1.2
+pydantic>=2.13
+pyyaml>=6.0
+httpx>=0.28
+numpy>=2.5
+pypdf>=6.19
+# Lokale Embeddings (ONNX). Ohne dieses Paket: EMBEDDING_MODEL=none (nur Stichwortsuche)
+fastembed>=0.8

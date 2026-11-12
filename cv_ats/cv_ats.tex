@@ -1,0 +1,177 @@
+%% General CV - Felix Möller - public download for felixmoeller.me
+%% Not tailored to a single posting: aimed at ML / AI engineering, computer vision,
+%% LLM / GenAI engineering and Python backend roles (search priorities 1-4).
+%% Public-facing: phone number and GitHub link deliberately omitted
+%% (scraping risk; all GitHub repositories are private). Restore the phone
+%% number in any copy sent directly to an employer.
+%% Review before each republish: "Looking for a full-time role" (remove once hired)
+%% and "Docker (learning ...)" (update as the side project progresses).
+%%
+%% Compile with: lualatex main_website_general.tex
+
+\documentclass[11pt,a4paper,sans]{moderncv}
+\moderncvstyle{banking}
+\moderncvcolor{blue}
+
+% Name and section headings in moderncv blue (see 05-cv-templates.md, Color overrides).
+\renewcommand*{\namefont}{\fontsize{34}{36}\bfseries\upshape}
+\colorlet{firstnamecolor}{color1}
+\colorlet{lastnamecolor}{color1}
+\colorlet{namecolor}{color1}
+\renewcommand*{\sectionstyle}[1]{{\sectionfont\color{color1}#1}}
+
+% Title on its own smaller line under the name. Banking sets it at the name's
+% \Huge size after a "|" on the same line, which wraps a long title over three
+% lines. The argument (which carries that "~|~" prefix) is ignored on purpose.
+\makeatletter
+\renewcommand*{\titlestyle}[1]{\\[4pt]{\Large\mdseries\upshape\textcolor{color2!85}{\@title}}}
+\makeatother
+
+\usepackage[utf8]{inputenc}
+\ifpdftex\usepackage[T1]{fontenc}\fi
+\AtEndPreamble{\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={Felix Möller - CV},
+    pdfauthor={Felix Möller},
+    pdfsubject={Curriculum Vitae: Machine Learning, Computer Vision and LLM Applications},
+    pdfkeywords={Machine Learning Engineer, AI Engineer, Computer Vision, LLM, RAG, PyTorch, Python, FastAPI},
+    pdfpagemode=UseNone,
+}}
+\usepackage[scale=0.80]{geometry}
+\usepackage{import}
+\usepackage{needspace}
+
+% personal data
+\name{Felix}{Möller}
+\title{Machine Learning \textbullet{} Computer Vision \textbullet{} LLM \& RAG Applications}
+\address{Erfurt, Germany}{}{}
+\email{felixmoeller@felixmoeller.me}
+% LinkedIn URL contains "ö": percent-encoded, with \% so LaTeX does not treat % as a comment.
+\extrainfo{\href{https://felixmoeller.me}{felixmoeller.me}, \href{https://www.linkedin.com/in/felix-m\%C3\%B6ller-16a566336}{LinkedIn}}
+
+\begin{document}
+
+\makecvtitle
+
+% ============================================================
+%     PROFILE STATEMENT
+% ============================================================
+
+\vspace{6pt}
+\small{Computer scientist (M.Sc., TU Ilmenau, grade 1.3) who trains and evaluates deep learning models in PyTorch and builds LLM-powered applications with FastAPI and React. At the BMW Group, extended a vehicle-fault classifier to tree-structured data (up to +2 percentage points F1) and evaluated a calibration method (MetaCal) with about an order of magnitude lower calibration error than the existing approach. Master's thesis (grade 1.0) on efficient multi-view object recognition: about 88\,\% less estimated compute on video data at comparable accuracy. Designed and operates a RAG assistant, live at felixmoeller.me, and brings 20 months of full-stack development in an agile team. Looking for a full-time role in ML and AI engineering, data science or computer vision; open to relocating anywhere in Germany or working remotely.}
+
+% ============================================================
+%     CORE COMPETENCIES
+% ============================================================
+
+\section{Core Competencies}
+\vspace{1pt}
+\begin{itemize}
+
+\item \textbf{Machine Learning \& Deep Learning}: Python, PyTorch, PyTorch Lightning, scikit-learn, Pandas, NumPy, Matplotlib, Plotly; Set Transformer, transfer and teacher-student learning, probability calibration; systematic evaluation with ablation studies, repeated runs and balanced metrics; experiment tracking with Weights \& Biases, configuration with Hydra.
+
+\item \textbf{Computer Vision}: CNNs (ConvNeXt, EfficientNet) with torchvision, multi-view image and video classification, frame and view selection for efficient inference, data augmentation (RandAugment), synthetic image corruptions (blur, noise, occlusion) for robustness, OpenCV.
+
+\item \textbf{Generative AI \& LLM Applications}: Retrieval-Augmented Generation (RAG) on the Claude API (citations, prompt caching, system prompts, model fallback), hybrid lexical and semantic search (BM25 + multilingual embeddings, Reciprocal Rank Fusion), LLM evals, prompt-injection mitigation; agentic coding with Claude Code.
+
+\item \textbf{Backend \& Deployment}: FastAPI, Pydantic, Server-Sent Events; Linux server operations (systemd, Caddy), deploy script with health checks, uptime monitoring, GitHub Actions, Vercel; AWS (S3, SageMaker); Docker (learning it in a microservice side project).
+
+\item \textbf{Software Engineering \& Data}: Java, Spring Boot, JSF/PrimeFaces, JavaScript/React; SQL, PostgreSQL, Snowflake, Streamlit; testing with pytest, JUnit and Selenium; Scrum, Git, Jira.
+
+\end{itemize}
+
+% ============================================================
+%     PROFESSIONAL EXPERIENCE
+% ============================================================
+
+\section{Professional Experience}
+\vspace{3pt}
+\begin{itemize}
+
+\needspace{5\baselineskip}
+\item{\cventry{Apr 2025 - Aug 2025}{Data Analytics Intern (Machine Learning)}{BMW Group}{Munich, Germany}{}{\vspace{1pt}
+AI model classifying root causes of vehicle faults from workshop data. Python, PyTorch, Pandas, SQL, Snowflake, AWS.
+\begin{itemize}
+    \item Extended the fault classifier to tree-structured JSON data with a recursive Set Transformer and PyTorch nested tensors (no padding): up to +2 percentage points F1 in affected use cases
+    \item Benchmarked calibration methods (BBQ, ENIR, MetaCal) against the existing isotonic regression; implemented MetaCal with about an order of magnitude lower Expected Calibration Error and built a custom MLP calibrator with a differentiable ECE loss
+    \item Rebuilt the analysts' Streamlit dashboard on Snowflake from scratch: change-aware caching and lightweight row markers removed waits of 5+ seconds after every interaction
+    \item Prototyped computer vision integration (zero-shot image categorization, per-category EfficientNetV2-S embeddings); recommended stopping after finding only about 1\,\% of cases had images
+    \item Presented results to the team with slides, whiteboard and live demos
+\end{itemize}}}
+
+\vspace{3pt}
+
+\needspace{5\baselineskip}
+\item{\cventry{Aug 2023 - Mar 2025}{Working Student, Web Development (Full-Stack Java)}{IBYKUS AG}{Erfurt, Germany}{}{\vspace{1pt}
+E-government web portal for managing public funding, Scrum team. Java, JSF/PrimeFaces, JavaScript, SQL, Selenium, JUnit.
+\begin{itemize}
+    \item Developed frontend and backend features, including sub-projects for the HALM2 agri-environmental funding program (Hesse)
+    \item Led a frontend taskforce: accessible mobile prototype and frontend templates reused by backend developers
+    \item Built a brute-force form-validation test framework that drives the browser via Selenium: 100\,\% test coverage of all forms in the application
+    \item Wrote unit and integration tests, fixed bugs and onboarded interns
+\end{itemize}}}
+
+\end{itemize}
+
+% ============================================================
+%     EDUCATION
+% ============================================================
+
+\section{Education}
+\vspace{1pt}
+\begin{itemize}
+
+\needspace{5\baselineskip}
+\item{\cventry{Apr 2024 - May 2026}{M.Sc. Computer Science (Informatik)}{Technische Universität Ilmenau}{Ilmenau, Germany}{Grade 1.3 (German scale, 1.0 = best)}{\vspace{1pt}
+Thesis (grade 1.0): ``Learning to Select Informative Views for Efficient Multi-View Object Recognition.'' Designed a two-stage PyTorch pipeline: a lightweight frame scorer (EfficientNet Lite 0), trained teacher-student style on calibrated classifier confidences, selects the most informative frames for a multi-view CNN (ConvNeXt Tiny). Evaluated on four datasets: about 88\,\% less estimated compute on video data at comparable balanced accuracy (at most 0.1 pp loss); 97\,\% recall for corrupted frames.
+}}
+
+\vspace{3pt}
+
+\item{\cventry{Oct 2020 - Jun 2024}{B.Sc. Computer Science (Informatik)}{Technische Universität Ilmenau}{Ilmenau, Germany}{Grade 1.8}{}}
+
+\end{itemize}
+
+% ============================================================
+%     PROJECTS
+% ============================================================
+
+\needspace{6\baselineskip}
+\section{Projects}
+\vspace{3pt}
+\begin{itemize}
+
+\item{\cventry{Oct 2026 - Present}{Portfolio Website with AI Assistant}{\href{https://felixmoeller.me}{felixmoeller.me}}{}{}{\vspace{1pt}
+Solo project, built with Claude Code. Python, FastAPI, Claude API, RAG, React, pytest.
+\begin{itemize}
+    \item Designed an AI assistant that answers recruiter questions with source citations: hybrid BM25 + multilingual embedding search fused via Reciprocal Rank Fusion, answers streamed via Server-Sent Events
+    \item Secured with an HMAC-signed chat history against prompt injection, rate limits, a daily cost budget and Pydantic input validation; GDPR-compliant (no IP logging); about 100 pytest tests plus LLM evals with trick questions
+    \item Runs the backend on a self-managed Linux server (systemd, Caddy) with a health-checked deploy script and uptime monitoring; bilingual React frontend; CV built as code by GitHub Actions
+\end{itemize}}}
+
+\end{itemize}
+
+% ============================================================
+%     LANGUAGES
+% ============================================================
+
+\section{Languages}
+\vspace{1pt}
+\begin{itemize}
+\item {German (native), English (C1, fluent), Chinese (basic, HSK 1).}
+\end{itemize}
+
+% ============================================================
+%     REFERENCES
+% ============================================================
+
+\section{References}
+\vspace{1pt}
+\begin{itemize}
+\item{Available upon request.}
+\end{itemize}
+
+\end{document}

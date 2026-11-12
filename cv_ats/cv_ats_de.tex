@@ -1,0 +1,177 @@
+%% Allgemeiner Lebenslauf - Felix Möller - öffentlicher Download für felixmoeller.me (Deutsch)
+%% German counterpart of main_website_general.tex; keep the two in sync.
+%% Not tailored to a single posting: aimed at ML / AI engineering, computer vision,
+%% LLM / GenAI engineering and Python backend roles (search priorities 1-4).
+%% Public-facing: phone number and GitHub link deliberately omitted
+%% (scraping risk; all GitHub repositories are private). Restore the phone
+%% number in any copy sent directly to an employer.
+%% Review before each republish: "Sucht eine Vollzeitstelle" (remove once hired)
+%% and "Docker (in Einarbeitung ...)" (update as the side project progresses).
+%%
+%% Compile with: lualatex main_website_general_de.tex
+
+\documentclass[11pt,a4paper,sans]{moderncv}
+\moderncvstyle{banking}
+\moderncvcolor{blue}
+
+% Name and section headings in moderncv blue (see 05-cv-templates.md, Color overrides).
+\renewcommand*{\namefont}{\fontsize{34}{36}\bfseries\upshape}
+\colorlet{firstnamecolor}{color1}
+\colorlet{lastnamecolor}{color1}
+\colorlet{namecolor}{color1}
+\renewcommand*{\sectionstyle}[1]{{\sectionfont\color{color1}#1}}
+
+% Title on its own smaller line under the name (see main_website_general.tex).
+\makeatletter
+\renewcommand*{\titlestyle}[1]{\\[4pt]{\Large\mdseries\upshape\textcolor{color2!85}{\@title}}}
+\makeatother
+
+\usepackage[utf8]{inputenc}
+\ifpdftex\usepackage[T1]{fontenc}\fi
+\usepackage[ngerman]{babel}
+\AtEndPreamble{\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={Felix Möller - Lebenslauf},
+    pdfauthor={Felix Möller},
+    pdfsubject={Lebenslauf: Machine Learning, Computer Vision und LLM-Anwendungen},
+    pdfkeywords={Machine Learning Engineer, KI-Entwickler, AI Engineer, Data Scientist, Computer Vision, LLM, RAG, PyTorch, Python, FastAPI},
+    pdfpagemode=UseNone,
+}}
+\usepackage[scale=0.80]{geometry}
+\usepackage{import}
+\usepackage{needspace}
+
+% personal data
+\name{Felix}{Möller}
+\title{Machine Learning \textbullet{} Computer Vision \textbullet{} LLM \& RAG}
+\address{Erfurt, Deutschland}{}{}
+\email{felixmoeller@felixmoeller.me}
+% LinkedIn URL contains "ö": percent-encoded, with \% so LaTeX does not treat % as a comment.
+\extrainfo{\href{https://felixmoeller.me}{felixmoeller.me}, \href{https://www.linkedin.com/in/felix-m\%C3\%B6ller-16a566336}{LinkedIn}}
+
+\begin{document}
+
+\makecvtitle
+
+% ============================================================
+%     PROFIL
+% ============================================================
+
+\vspace{6pt}
+\small{Informatiker (M.Sc., TU Ilmenau, Note 1,3), der Deep-Learning-Modelle in PyTorch trainiert und evaluiert und LLM-basierte Anwendungen mit FastAPI und React entwickelt. Bei der BMW Group einen Klassifikator für Fahrzeugfehler auf baumstrukturierte Daten erweitert (bis zu +2 Prozentpunkte F1) und die Kalibrierungsmethode MetaCal evaluiert, mit einem um rund eine Größenordnung niedrigeren Kalibrierungsfehler als der bestehende Ansatz. Masterarbeit (Note 1,0) zur effizienten Multi-View-Objekterkennung: rund 88\,\% weniger geschätzter Rechenaufwand auf Videodaten bei vergleichbarer Genauigkeit. Entwickelt und betreibt einen RAG-Assistenten, live auf felixmoeller.me, und bringt 20 Monate Full-Stack-Entwicklung in einem agilen Team mit. Sucht eine Vollzeitstelle in ML- und KI-Engineering, Data Science oder Computer Vision; umzugsbereit innerhalb Deutschlands oder remote.}
+
+% ============================================================
+%     KERNKOMPETENZEN
+% ============================================================
+
+\section{Kernkompetenzen}
+\vspace{1pt}
+\begin{itemize}
+
+\item \textbf{Machine Learning \& Deep Learning}: Python, PyTorch, PyTorch Lightning, scikit-learn, Pandas, NumPy, Matplotlib, Plotly; Set Transformer, Transfer- und Teacher-Student-Learning, Wahrscheinlichkeitskalibrierung; systematische Evaluation mit Ablationsstudien, wiederholten Läufen und balancierten Metriken; Experiment-Tracking mit Weights \& Biases, Konfiguration mit Hydra.
+
+\item \textbf{Computer Vision}: CNNs (ConvNeXt, EfficientNet) mit torchvision, Multi-View-Bild- und Videoklassifikation, Frame- und Ansichtsauswahl für effiziente Inferenz, Datenaugmentierung (RandAugment), synthetische Bildstörungen (Unschärfe, Rauschen, Verdeckung) für Robustheit, OpenCV.
+
+\item \textbf{Generative KI \& LLM-Anwendungen}: Retrieval-Augmented Generation (RAG) mit der Claude API (Quellenangaben, Prompt Caching, System-Prompts, Fallback-Modell), hybride lexikalische und semantische Suche (BM25 + mehrsprachige Embeddings, Reciprocal Rank Fusion), LLM-Evals, Schutz vor Prompt Injection; agentisches Programmieren mit Claude Code.
+
+\item \textbf{Backend \& Deployment}: FastAPI, Pydantic, Server-Sent Events; Linux-Serverbetrieb (systemd, Caddy), Deploy-Skript mit Health-Checks, Uptime-Monitoring, GitHub Actions, Vercel; AWS (S3, SageMaker); Docker (in Einarbeitung, Microservice-Nebenprojekt).
+
+\item \textbf{Softwareentwicklung \& Daten}: Java, JSF/PrimeFaces, JavaScript/React; SQL, PostgreSQL, Snowflake, Streamlit; Tests mit pytest, JUnit und Selenium; Scrum, Git, Jira.
+
+\end{itemize}
+
+% ============================================================
+%     BERUFSERFAHRUNG
+% ============================================================
+
+\section{Berufserfahrung}
+\vspace{3pt}
+\begin{itemize}
+
+\needspace{5\baselineskip}
+\item{\cventry{04/2025 - 08/2025}{Praktikant Data Analytics (Machine Learning)}{BMW Group}{München}{}{\vspace{1pt}
+KI-Modell zur Ursachenklassifikation von Fahrzeugfehlern aus Werkstattdaten. Python, PyTorch, Pandas, SQL, Snowflake, AWS.
+\begin{itemize}
+    \item Klassifikator auf baumstrukturierte JSON-Daten erweitert (rekursiver Set Transformer, PyTorch Nested Tensors ohne Padding): bis zu +2 Prozentpunkte F1 in betroffenen Anwendungsfällen
+    \item Kalibrierungsmethoden (BBQ, ENIR, MetaCal) mit der bestehenden isotonischen Regression verglichen; MetaCal implementiert (Expected Calibration Error um rund eine Größenordnung niedriger) und einen eigenen MLP-Kalibrator mit differenzierbarem ECE-Loss gebaut
+    \item Streamlit-Dashboard der Analysten auf Snowflake von Grund auf neu aufgebaut: änderungsbewusstes Caching und leichtgewichtige Zeilenmarkierungen beseitigten Wartezeiten von mindestens 5 Sekunden nach jeder Interaktion
+    \item Computer-Vision-Integration prototypisch umgesetzt (Zero-Shot-Bildkategorisierung, kategoriespezifische EfficientNetV2-S-Embeddings); das Team stellte die Entwicklung ein, da nur rund 1\,\% der Fälle Bilder enthielten
+    \item Ergebnisse dem Team mit Folien, Whiteboard und Live-Demos präsentiert
+\end{itemize}}}
+
+\vspace{3pt}
+
+\needspace{5\baselineskip}
+\item{\cventry{08/2023 - 03/2025}{Werkstudent Webentwicklung (Full-Stack Java)}{IBYKUS AG}{Erfurt}{}{\vspace{1pt}
+E-Government-Webportal zur Verwaltung öffentlicher Fördermittel, Scrum-Team. Java, JSF/PrimeFaces, JavaScript, SQL, PostgreSQL, Selenium, JUnit.
+\begin{itemize}
+    \item Frontend- und Backend-Features entwickelt, u.\,a. Teilprojekte für das Agrarumwelt-Förderprogramm HALM2 (Hessen)
+    \item Frontend-Taskforce geleitet: barrierearmer mobiler Prototyp und Frontend-Templates, die Backend-Entwickler wiederverwendeten
+    \item Brute-Force-Testframework für Formularvalidierungen entwickelt, das den Browser per Selenium steuert: 100\,\% Testabdeckung aller Formulare der Anwendung
+    \item Unit- und Integrationstests geschrieben, Bugs behoben und Praktikanten eingearbeitet
+\end{itemize}}}
+
+\end{itemize}
+
+% ============================================================
+%     AUSBILDUNG
+% ============================================================
+
+\section{Ausbildung}
+\vspace{1pt}
+\begin{itemize}
+
+\needspace{5\baselineskip}
+\item{\cventry{04/2024 - 05/2026}{M.Sc. Informatik}{Technische Universität Ilmenau}{Ilmenau}{Note 1,3}{\vspace{1pt}
+Masterarbeit (Note 1,0): „Learning to Select Informative Views for Efficient Multi-View Object Recognition“. Zweistufige PyTorch-Pipeline entworfen: Ein leichtgewichtiger Frame-Scorer (EfficientNet Lite 0), im Teacher-Student-Verfahren auf kalibrierten Klassifikator-Konfidenzen trainiert, wählt die informativsten Frames für ein Multi-View-CNN (ConvNeXt Tiny). Evaluiert auf vier Datensätzen: rund 88\,\% weniger geschätzter Rechenaufwand auf Videodaten bei vergleichbarer Balanced Accuracy (höchstens 0,1 Prozentpunkte Verlust); 97\,\% Recall für beschädigte Frames.
+}}
+
+\vspace{3pt}
+
+\item{\cventry{10/2020 - 06/2024}{B.Sc. Informatik}{Technische Universität Ilmenau}{Ilmenau}{Note 1,8}{}}
+
+\end{itemize}
+
+% ============================================================
+%     PROJEKTE
+% ============================================================
+
+\needspace{6\baselineskip}
+\section{Projekte}
+\vspace{3pt}
+\begin{itemize}
+
+\item{\cventry{10/2026 - heute}{Portfolio-Website mit KI-Assistent}{\href{https://felixmoeller.me}{felixmoeller.me}}{}{}{\vspace{1pt}
+Eigenprojekt, entwickelt mit Claude Code. Python, FastAPI, Claude API, RAG, React, pytest.
+\begin{itemize}
+    \item KI-Assistent entworfen, der Fragen von Recruitern mit Quellenangaben beantwortet: hybride Suche aus BM25 und mehrsprachigen Embeddings, fusioniert per Reciprocal Rank Fusion, Antworten per Server-Sent Events gestreamt
+    \item Abgesichert durch HMAC-signierten Chatverlauf gegen Prompt Injection, Rate Limits, Tagesbudget und Pydantic-Eingabevalidierung; DSGVO-konform (kein IP-Logging); rund 100 pytest-Tests plus LLM-Evals mit Fangfragen
+    \item Backend-Betrieb auf eigenem Linux-Server (systemd, Caddy) mit Deploy-Skript inkl. Health-Check und Uptime-Monitoring; zweisprachiges React-Frontend; Lebenslauf als Code per GitHub Actions
+\end{itemize}}}
+
+\end{itemize}
+
+% ============================================================
+%     SPRACHEN
+% ============================================================
+
+\section{Sprachen}
+\vspace{1pt}
+\begin{itemize}
+\item {Deutsch (Muttersprache), Englisch (C1, fließend), Chinesisch (Grundkenntnisse, HSK 1).}
+\end{itemize}
+
+% ============================================================
+%     REFERENZEN
+% ============================================================
+
+\section{Referenzen}
+\vspace{1pt}
+\begin{itemize}
+\item{Auf Anfrage erhältlich.}
+\end{itemize}
+
+\end{document}

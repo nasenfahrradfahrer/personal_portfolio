@@ -1,0 +1,8 @@
+node_modules
+dist
+*.local
+.DS_Store
+*.png
+*.jpg
+# Ausnahme: Profilbild, wird auf der Seite ausgeliefert
+!public/headshot.jpg
